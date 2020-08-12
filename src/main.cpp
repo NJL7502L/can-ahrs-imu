@@ -48,12 +48,26 @@ void setup() {
   CANbus.begin();
   CANbus.setBaudRate(1000000);
   
-  MsTimer2::set(1, timerInt); //[ms]//0.5msごとでも良さそう。
+  MsTimer2::set(1, timerInt);
   MsTimer2::start();
+}
+
+void printTitleValue(const char* str,float val){
+  Serial.print(str);
+  Serial.print(" :\t");
+  Serial.print(val);
+  Serial.print("\t");
+}
+
+void debugPrint(){
+  printTitleValue("yaw",yaw.f);
+  printTitleValue("pitch",pitch.f);
+  printTitleValue("roll",roll.f);
+  Serial.println();
 }
 
 void loop() {
   digitalWrite(LED_BUILTIN,LOW);
   delay(500);
-  Serial.println(pitch.f);
+  debugPrint();
 }
