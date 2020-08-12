@@ -3,16 +3,13 @@
 #include <MsTimer2.h>
 
 FlexCAN_T4<CAN3, RX_SIZE_256, TX_SIZE_16> CANbus;
-CAN_message_t msg;
 
 union FtoC{
   float f;
   uint8_t c[4];
 };
 
-FtoC pitch;
-FtoC roll;
-FtoC yaw;
+FtoC pitch, roll, yaw;
 
 void canbusRead(){
   CAN_message_t rxmsg;
@@ -23,10 +20,10 @@ void canbusRead(){
     pitch.c[2] = rxmsg.buf[2];
     pitch.c[3] = rxmsg.buf[3];
 
-    roll.c[0] = rxmsg.buf[0];
-    roll.c[1] = rxmsg.buf[1];
-    roll.c[2] = rxmsg.buf[2];
-    roll.c[3] = rxmsg.buf[3];
+    roll.c[0] = rxmsg.buf[4];
+    roll.c[1] = rxmsg.buf[5];
+    roll.c[2] = rxmsg.buf[6];
+    roll.c[3] = rxmsg.buf[7];
   }else if(rxmsg.id == 0x0B){
     yaw.c[0] = rxmsg.buf[0];
     yaw.c[1] = rxmsg.buf[1];
